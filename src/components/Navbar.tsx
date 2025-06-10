@@ -37,7 +37,7 @@ async function Navbar() {
 
                 {/* go to products page */}
                 <Button variant='ghost' className='flex items-center gap-2' asChild>
-                    <Link href='/products'>
+                    <Link href='/plants'>
                         <ShoppingBasket className='w-4 h-4' />
                         <span className='hidden lg:inline'>Shopping</span>
                     </Link>
