@@ -4,7 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+
 .yarn/install-state.gz
+
 
 # testing
 /coverage
@@ -35,5 +37,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+<<<<<<< HEAD
 
 /src/generated/prisma
+=======
+>>>>>>> 1a32623d7aa0bccde05519450d55a4cfec80bcb6
