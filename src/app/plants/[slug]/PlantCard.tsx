@@ -11,6 +11,7 @@ import {
 import { Badge } from "../../../components/ui/badge";
 import { getPlantById } from "@/actions/plant.action";
 
+
 type Plant = Awaited<ReturnType<typeof getPlantById>>;
 
 interface PlantCardProps {
@@ -23,6 +24,7 @@ export default function PlantCard({ plant }: PlantCardProps) {
   if (!plant) {
     return <div>Plant data is not available.</div>;
   }
+
 
   return (
     <Card className="max-w">
@@ -39,6 +41,7 @@ export default function PlantCard({ plant }: PlantCardProps) {
             </div>
           )}
 
+           
           </CardHeader>
         </div>
         <div className="basis-2/4 flex flex-col justify-between">

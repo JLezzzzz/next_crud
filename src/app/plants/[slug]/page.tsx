@@ -1,16 +1,16 @@
 import React from 'react'
 import PlantCard from './PlantCard'
-import { getPlantById } from '@/actions/plant.action'
-import { get } from 'http'
+import { getPlantById } from '@/actions/plant.action';
 import { stackServerApp } from '@/stack';
 import { SignIn } from '@stackframe/stack';
 
+export const dynamic = 'force-dynamic';
 export async function generateMetadata({
     params,
   }: {
     params: { slug: string };
   }) {
-
+   
     // Extract the id from the slug by splitting on the delimiter
     const [id] = params.slug.split("--");
     const plant = await getPlantById(id);
@@ -19,28 +19,26 @@ export async function generateMetadata({
       description: plant ? plant.description : "Plant details page",
     };
 }
+  
 
+async function page({params}: {params: {slug: string}}) {
+    const user = await stackServerApp.getUser();
+    const [id] = params.slug.split("--");
+    const plant = await getPlantById(id);
 
-async function page({
-    params
-}: {
-    params: {slug: string}
-}) {
+    if(!user) {
+        return <SignIn />
+    }
 
-const user = await stackServerApp.getUser();
-const [id] = params.slug.split("--")
-const plant = await getPlantById(id);
-
-if(!user) {
-    return <SignIn/>
-}
+    console.log('slug:', params.slug);
+console.log('plant:', plant);
 
   return (
-    <div className="mt-7 max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-10 gap-6">
-        <div className="lg:col-span-full">
-            <PlantCard plant = {plant}/>
-        </div>
-    </div>
+     <div className="mt-7 max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-10 gap-6">
+              <div className="lg:col-span-full">
+                <PlantCard plant={plant} />
+              </div>
+            </div>
   )
 }
 
