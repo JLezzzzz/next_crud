@@ -24,19 +24,19 @@ import ImageUpload from "./ImageUpload";
 type Plant = NonNullable<Awaited<ReturnType<typeof getPlantById>>>;
 
 interface EditDialogProps {
-    plant: Plant;
+  plant: Plant;
 }
 
-export default function EditDialog({plant}: EditDialogProps) {
-  const [formData, setFormData] = useState({
-    name: plant?.name.trim(),
-    description: (plant?.description || "").trim(),
-    stock: plant?.stock,
-    price: plant?.price,
-    category: plant?.category,
-    userId: plant?.userId,
-    imageUrl: plant?.imageUrl,
-  });
+export default function EditDialog({ plant }: EditDialogProps) {
+  const [formData, setFormData] = useState(() => ({
+    name: plant.name.trim(),
+    description: (plant.description || "").trim(),
+    stock: plant.stock,
+    price: plant.price,
+    category: plant.category.trim(),
+    userId: plant.userId.trim(),
+    imageUrl: plant.imageUrl || "",
+  }));
 
   const handleChange = (field: string, value: string | number) => {
     setFormData({ ...formData, [field]: value });
