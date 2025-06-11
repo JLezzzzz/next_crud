@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Target } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -61,15 +61,13 @@ const Hero = ({
             <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
               {description}
             </p>
+            <p className="mb-8 max-w-xl text-muted-foreground lg:text-sm">
+              Plant shop inventory app with full CRUD operations.
+            </p>
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
-              {buttons.primary && (
-                <Button asChild className="w-full sm:w-auto">
-                  <a href={buttons.primary.url}>{buttons.primary.text}</a>
-                </Button>
-              )}
               {buttons.secondary && (
                 <Button asChild variant="outline" className="w-full sm:w-auto">
-                  <a href={buttons.secondary.url}>
+                  <a href="https://github.com/JLezzzzz/next_crud" target="_blank">
                     {buttons.secondary.text}
                     <ArrowRight className="size-4" />
                   </a>
@@ -78,8 +76,8 @@ const Hero = ({
             </div>
           </div>
           <img
-            src={image.src}
-            alt={image.alt}
+            src="/assets/images/plant-shop.jpg"
+            alt="Plant shop image"
             className="max-h-96 w-full rounded-md object-cover"
           />
         </div>

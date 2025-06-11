@@ -10,26 +10,32 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Sprout } from "lucide-react";
+import { EditIcon, Sprout } from "lucide-react";
 import { Combobox } from "./ui/combo-box";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { Textarea } from "./ui/textarea";
-import { createPlant } from "@/actions/plant.action";
+import { createPlant, editPlant, getPlantById } from "@/actions/plant.action";
 import toast from "react-hot-toast";
 import ImageUpload from "./ImageUpload";
 // import ImageUpload from "./ImageUpload";
 
-export default function CreateDialog() {
+type Plant = NonNullable<Awaited<ReturnType<typeof getPlantById>>>;
+
+interface EditDialogProps {
+    plant: Plant;
+}
+
+export default function EditDialog({plant}: EditDialogProps) {
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    stock: 1,
-    price: 1,
-    category: "",
-    userId: "",
-    imageUrl: "",
+    name: plant?.name.trim(),
+    description: (plant?.description || "").trim(),
+    stock: plant?.stock,
+    price: plant?.price,
+    category: plant?.category,
+    userId: plant?.userId,
+    imageUrl: plant?.imageUrl,
   });
 
   const handleChange = (field: string, value: string | number) => {
@@ -39,12 +45,12 @@ export default function CreateDialog() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const newPlant = await createPlant(formData);
-      console.log("plant created: ", newPlant);
-      toast.success("Plant created successfully");
+      const newPlant = await editPlant(plant.id, formData);
+      console.log("plant editd: ", newPlant);
+      toast.success("Plant editd successfully");
     } catch (error) {
       console.error("error creating plant", error);
-      toast.error("Failed to create plant");
+      toast.error("Failed to edit plant");
     }
   };
 
@@ -58,8 +64,8 @@ export default function CreateDialog() {
 
         >
           <span>
-            <Sprout className="w-4 h-4" />
-            Add Plant
+            <EditIcon className="w-4 h-4" />
+            Edit Plant
           </span>
         </Button>
       </AlertDialogTrigger>
@@ -132,7 +138,7 @@ export default function CreateDialog() {
             }}
           />
           </div>
-          
+
 
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

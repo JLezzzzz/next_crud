@@ -17,6 +17,9 @@ import { useState } from "react";
 import { getPlants } from "@/actions/plant.action";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
+import CreateDialog from "./CreateDialog";
+import EditDialog from "./EditDialog";
+import DeleteDialog from "./DeleteDialog";
 
 
 type Plant = Awaited<ReturnType<typeof getPlants>>
@@ -110,7 +113,8 @@ export default function InventoryTable({plants} : InventoryTableProps) {
                 <Search className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2" />
             </div>
             <Combobox value={selectedCategory} onChange={(val) => setSelectedCategory(val)}/>
-              <h1>Create Button</h1>
+
+              <CreateDialog/>
 
 
         </div>
@@ -142,9 +146,11 @@ export default function InventoryTable({plants} : InventoryTableProps) {
                         <TableCell>{plant.price}</TableCell>
                         <TableCell className="font-bold">{plant.stock}</TableCell>
                         <TableCell className="text-right">
-                            <div className="flex justify-end space-x-4">
-                                <h1>Edit button</h1>
-                                <h1>Delete Button</h1>
+                            <div className="flex justify-end space-x-4"
+                            onClick={(e) => e.stopPropagation()}
+                            >
+                                <EditDialog plant={plant}/>
+                                <DeleteDialog plant={plant}/>
                             </div>
                         </TableCell>
                     </TableRow>
